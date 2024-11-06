@@ -1,0 +1,29 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: https://github.com/chtime/via
+    openshift.io/generated-by: OpenShiftWebConsole
+    openshift.io/host.generated: "true"
+  labels:
+    app: via
+    app.kubernetes.io/component: via
+    app.kubernetes.io/instance: via
+    app.kubernetes.io/name: via
+    app.kubernetes.io/part-of: via
+  name: via
+  namespace: time
+spec:
+  host: via-time.apps.concordia.a-cluster.ch
+  port:
+    targetPort: 8000-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: via
+    weight: 100
+  wildcardPolicy: None
+

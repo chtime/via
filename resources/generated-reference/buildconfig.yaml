@@ -1,0 +1,38 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: https://github.com/chtime/via
+    openshift.io/generated-by: OpenShiftWebConsole
+  labels:
+    app: via
+    app.kubernetes.io/component: via
+    app.kubernetes.io/instance: via
+    app.kubernetes.io/name: via
+    app.kubernetes.io/part-of: via
+  name: via
+  namespace: time
+spec:
+  failedBuildsHistoryLimit: 5
+  output:
+    to:
+      kind: ImageStreamTag
+      name: via:latest
+  source:
+    contextDir: /
+    git:
+      uri: https://github.com/chtime/via
+      ref: master
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - github:
+      secretReference:
+        name: via-github-webhook-secret
+    type: GitHub
+  - type: ConfigChange
