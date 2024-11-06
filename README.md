@@ -31,3 +31,7 @@ cd app
 TAG=chtime/via:latest
 podman build -t $TAG .
 ```
+
+## Deploying on OpenShift
+
+You can directly import this via the OpenShift console into a cluster. More details are in [resources](./resources/README.md).
