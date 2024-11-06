@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: via
+    app.kubernetes.io/component: via
+    app.kubernetes.io/instance: via
+    app.kubernetes.io/name: via
+    app.kubernetes.io/part-of: via
+  name: via
+  namespace: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: via
+  template:
+    metadata:
+      labels:
+        app: via
+        deployment: via
+    spec:
+      containers:
+      - name: via
+        image: image-registry.openshift-image-registry.svc:5000/hello/via-app@sha256:57c7548885d394aa9d6d9f519be6bbef04deed9590620111a60801433b011068
+        imagePullPolicy: Always
+        env:
+        - name: STAGE
+          valueFrom:
+            configMapKeyRef:
+              key: stage 
+              name: via-cfg
+        - name: VERSION_PROXY
+          valueFrom:
+            configMapKeyRef:
+              key: version-proxy
+              name: via-cfg
+
