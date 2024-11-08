@@ -11,6 +11,15 @@ The following environment variables are used:
 
 Furthermore, the whole env is visible in the app.
 
+## Dependencies
+
+```bash
+cd app
+python -m venv .venv  # do this in a virtual environment to isolate dependencies
+source .venv/bin/activate  # actually use the new environment in this shell
+pip install -r requirements.txt  # install dependencies
+``` 
+
 ## Usage
 
 You can run this either with flask directly:
