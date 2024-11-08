@@ -1,7 +1,6 @@
 FROM python:3-alpine@sha256:c38ead8bcf521573dad837d7ecfdebbc87792202e89953ba8b2b83a9c5a520b6
 
-# PORT as used by gunicorn
-ENV PORT 8000
+EXPOSE 8000
 
 WORKDIR /app
 ADD app /app
