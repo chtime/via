@@ -19,7 +19,7 @@ The magic here is that (when using the UI defaults):
 
 ## Configuring Auto-Builds through Webhooks
 
-The BuildConfig will furthermore have triggers for webhooks; in order to call these webhooks from e.g. GitHub, you need to extract their URL:
+The BuildConfig will furthermore have triggers for webhooks; in order to call these webhooks from e.g. GitHub, you need to extract their URL. Either you check the web-console buildconfig and "Copy URL with secret" for the GitHub webhook, or you assemble the URL manually yourself:
 
 ```bash
 oc get buildconfig/via # note the Webhook URL
