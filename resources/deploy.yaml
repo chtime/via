@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: via
+  name: via
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: via
+  template:
+    metadata:
+      labels:
+        app: via
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: via-cfg
+
+      containers:
+        - name: via
+          image: docker.io/chtime/via
+          imagePullPolicy: Always
+          env:
+            - name: STAGE
+              valueFrom:
+                configMapKeyRef:
+                  key: stage
+                  name: via-cfg
+            - name: VERSION_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  key: version-proxy
+                  name: via-cfg
+            - name: VOLUMES_PATH
+              value: /volumes/
+          volumeMounts:
+            - name: config-volume
+              mountPath: /volumes/volume-path

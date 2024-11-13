@@ -5,4 +5,4 @@ metadata:
 data:
   version-proxy: OPENSHIFT_BUILD_NAME
   stage: int
-
+  some-value: not-used-in-the-app
