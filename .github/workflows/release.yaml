@@ -2,10 +2,10 @@ name: Build and Publish Container
 
 on:
   push:
-    branches: ["main", "feature/*"]
+    branches: ["master", "feature/*"]
     tags: ["v*.*.*"]
   pull_request:
-    branches: ["main"]
+    branches: ["master"]
 
 env:
   REGISTRY: ghcr.io
