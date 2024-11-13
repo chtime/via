@@ -29,11 +29,11 @@ spec:
                 configMapKeyRef:
                   key: stage
                   name: via-cfg
-            - name: VERSION_PROXY
-              valueFrom:
-                configMapKeyRef:
-                  key: version-proxy
-                  name: via-cfg
+            # - name: VERSION_PROXY
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       key: version-proxy
+            #       name: via-cfg
             - name: VOLUMES_PATH
               value: /volumes/
           volumeMounts:

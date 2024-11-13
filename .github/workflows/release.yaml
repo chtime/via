@@ -2,10 +2,10 @@ name: Build and Publish Container
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main", "feature/*"]
     tags: ["v*.*.*"]
   pull_request:
-    branches: ["master"]
+    branches: ["main"]
 
 env:
   REGISTRY: ghcr.io
@@ -21,6 +21,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Generate build version
+        id: build_version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            # For tags, use the tag name without 'refs/tags/'
+            VERSION=${GITHUB_REF#refs/tags/}
+          elif [[ $GITHUB_REF == refs/heads/* ]]; then
+            # For branches, use branch name and short SHA
+            BRANCH=${GITHUB_REF#refs/heads/}
+            SHA=$(git rev-parse --short HEAD)
+            VERSION="${BRANCH}-${SHA}"
+          else
+            # For pull requests, use PR number and short SHA
+            SHA=$(git rev-parse --short HEAD)
+            VERSION="pr-${{ github.event.number }}-${SHA}"
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "build_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
@@ -53,5 +72,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_VERSION=${{ steps.build_version.outputs.version }}
+            BUILD_DATE=${{ steps.build_version.outputs.build_date }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
