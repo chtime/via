@@ -1,0 +1,26 @@
+{% extends "_html.html" %}
+
+{% block content %}
+<h2>Volumes</h2>
+
+{% if unavailable %}
+<b>Volumes are not configured. </b>
+{% elif file_name %}
+<h3>{{ file_name }}</h3>
+<pre>
+{% for line in file_content %}{{ line }}{% endfor %}
+</pre>
+{% elif files %}
+<h3>File Listing</h3>
+<ol>
+    {% for file in files %}
+    <li><a href="{{ file }}">{{ file }}</a></li>
+    {% endfor %}
+</ol>
+{% else %}
+
+:confused:
+
+{% endif %}
+
+{% endblock content %}
