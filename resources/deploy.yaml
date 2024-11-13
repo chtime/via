@@ -21,7 +21,7 @@ spec:
 
       containers:
         - name: via
-          image: ghcr.io/chtime/via:latest
+          image: ghcr.io/chtime/via:master
           imagePullPolicy: Always
           env:
             - name: STAGE
