@@ -1,5 +1,5 @@
 #!/bin/bash
 
-mv /tmp/src/app /app
-cd /app
+mv /tmp/src/app /opt/app
+cd /opt/app
 pip install -r requirements.txt
