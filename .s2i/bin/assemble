@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mv /tmp/src/app /app
+cd /app
+pip install -r requirements.txt
