@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd /opt/app
+cd $HOME/app
 
 gunicorn \
 	--bind '0.0.0.0' \
