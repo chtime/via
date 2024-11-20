@@ -2,6 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: via-cfg
+  labels:
+    app.kubernetes.io/part-of: via-app
 data:
   version-proxy: OPENSHIFT_BUILD_NAME
   stage: int

@@ -3,6 +3,7 @@ kind: Route
 metadata:
   labels:
     app: via
+    app.kubernetes.io/part-of: via-app
   name: via
 spec:
   port:
