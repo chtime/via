@@ -15,13 +15,12 @@ def root():
     return render_template("root.html", **_template_args())
 
 
-@app.route('/env')
+@app.route("/env")
 def env():
     return render_template("env.html", **_template_args(env=dict(os.environ)))
 
 
-
-@app.route('/volumes')
+@app.route("/volumes")
 def volumes():
     cfg_volumes_path = os.environ.get("VOLUMES_PATH")
     if not cfg_volumes_path:
@@ -39,7 +38,7 @@ def volumes():
             # Get the relative path from cfg_volumes_path
             full_path = os.path.join(root, file)
             relative_path = os.path.relpath(full_path, cfg_volumes_path)
-            
+
             # Create URL using the relative path
             path = url_for("volume_file", subpath=relative_path)
             file_links.append(path)
@@ -48,7 +47,7 @@ def volumes():
     return render_template("volumes.html", **_template_args(files=file_links))
 
 
-@app.route('/volumes/<path:subpath>')
+@app.route("/volumes/<path:subpath>")
 def volume_file(subpath):
     cfg_volumes_path = os.environ.get("VOLUMES_PATH")
     if not cfg_volumes_path:
@@ -78,8 +77,13 @@ def volume_file(subpath):
         file_name = os.path.basename(file_path)
         with open(file_path) as f:
             file_contents = f.readlines()
-        logger.debug(f"Successfully read file: {file_path} ({len(file_contents)} lines)")
-        return render_template("volumes.html", **_template_args(file_name=file_name, file_content=file_contents))
+        logger.debug(
+            f"Successfully read file: {file_path} ({len(file_contents)} lines)"
+        )
+        return render_template(
+            "volumes.html",
+            **_template_args(file_name=file_name, file_content=file_contents),
+        )
     except Exception as e:
         logger.error(f"Error reading file {file_path}: {e}")
         return "Error reading file", 500
@@ -92,12 +96,11 @@ def _get_version() -> str:
     else:
         return os.environ.get("VERSION", "n/a")
 
+
 def _template_args(**extra_args) -> dict:
     default_args = {
         "version": _get_version(),
-        "stage": os.environ.get("STAGE", "dev")
+        "stage": os.environ.get("STAGE", "dev"),
+        "message": os.environ.get("MESSAGE"),
     }
-    return {
-        **default_args,
-        **extra_args
-    }
+    return {**default_args, **extra_args}
