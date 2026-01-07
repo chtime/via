@@ -1,48 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}VIA{% endblock %}</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}VIA{% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        {% if stage == "dev" %}
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='style-dev.css') }}"
+        />
+        {% elif stage == "int" %}
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='style-int.css') }}"
+        />
+        {% elif stage =="prod" %}
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='style-prod.css') }}"
+        />
+        {% endif %}
+    </head>
 
-	{% if stage == "dev" %}
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-dev.css') }}">
-	{% elif stage == "int" %}
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-int.css') }}">
-	{% elif stage =="prod" %}
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-prod.css') }}">
-	{% endif %}
+    <body>
+        <nav>
+            <a href="{{ url_for('root') }}">Home</a>
+            <a href="{{ url_for('env') }}">env</a>
+            <a href="{{ url_for('volumes') }}">Volumes</a>
+            <a href="{{ url_for('static_image') }}">Image</a>
+        </nav>
 
-</head>
+        <main class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %} {% endif %} {% endwith %}
 
-<body>
-	<nav>
-		<a href="{{ url_for('root') }}">Home</a>
-		<a href="{{ url_for('env') }}">env</a>
-		<a href="{{ url_for('volumes') }}">Volumes</a>
-	</nav>
+            <h1>Very Important Application</h1>
+            {% block content %}{% endblock %}
+        </main>
 
-	<main class="container">
-		{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-		{% for category, message in messages %}
-		<div class="alert alert-{{ category }}">{{ message }}</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
-
-		<h1>Very Important Application</h1>
-		{% block content %}{% endblock %}
-	</main>
-
-	<footer>
-		{% block footer %}
-		<p>&copy; 2024 ACME Inc</p>
-		version <code>{{ version }}</code>, stage <code>{{ stage }}</code>
-		{% endblock %}
-	</footer>
-</body>
-
+        <footer>
+            {% block footer %}
+            <p>&copy; 2026 ACME Inc</p>
+            version <code>{{ version }}</code>, stage <code>{{ stage }}</code>
+            {% endblock %}
+        </footer>
+    </body>
 </html>

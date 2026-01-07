@@ -1,8 +1,7 @@
-import os
 import logging
+import os
 
 from flask import Flask, render_template, url_for
-
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -87,6 +86,18 @@ def volume_file(subpath):
     except Exception as e:
         logger.error(f"Error reading file {file_path}: {e}")
         return "Error reading file", 500
+
+
+@app.route("/image/static/")
+@app.route("/image/static/<variant>")
+def static_image(variant="a"):
+    image_options = {
+        "a": "66-800x400.jpg",
+        "b": "894-800x400.jpg",
+        "c": "237-800x400.jpg",
+    }
+    image_path = image_options.get(variant, "237-800x400.jpg")
+    return render_template("image.html", **_template_args(image_file_name=image_path))
 
 
 def _get_version() -> str:
