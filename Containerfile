@@ -1,4 +1,4 @@
-FROM python:3-alpine@sha256:829edcc737417f9084a154511bde03a50b7996f3746e4c8a6b30a99a9a10648c
+FROM python:3-alpine@sha256:e7e041128ffc3e3600509f508e44d34ab08ff432bdb62ec508d01dfc5ca459f7
 
 LABEL org.opencontainers.image.source="https://github.com/chtime/via"
 
