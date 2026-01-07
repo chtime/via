@@ -1,6 +1,4 @@
-{% extends "_html.html" %}
-
-{% block content %}
+{% extends "_html.html" %} {% block content %}
 <h2>Volumes</h2>
 
 {% if unavailable %}
@@ -17,10 +15,4 @@
     <li><a href="{{ file }}">{{ file }}</a></li>
     {% endfor %}
 </ol>
-{% else %}
-
-:confused:
-
-{% endif %}
-
-{% endblock content %}
+{% else %} :confused: {% endif %} {% endblock content %}
